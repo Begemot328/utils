@@ -1,0 +1,38 @@
+plugins {
+    id 'java-library'
+}
+
+group 'org.example'
+version '1.3.5'
+
+apply plugin: 'java-library'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+jar {
+    manifest {
+        attributes(
+                'version': "1.3.5",
+                'name'   : "utils"
+        )
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    api group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
+}
+
+test {
+    useJUnitPlatform()
+}
